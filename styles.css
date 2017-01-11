@@ -1,0 +1,10 @@
+div.box {
+    width:400px;
+    height:100px;
+    border: black 1px solid;
+    margin: 2px;
+}
+
+div.circle {
+    position: absolute;
+}
