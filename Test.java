@@ -86,17 +86,17 @@ public class Test {
                     sbuf.append(attName[4]);
                     sbuf.append(attName[5]);
 
-                    String displayName = values[1];
+                    String displayNames = values[1];
 
                     tempOUILookup.put(sbuf.toString(), displayName);
                     sbuf.setLength(0);
                 }
             }
             OUILookup = new ConcurrentHashMap<String, String>();
-            OUILookup.putAll(tempOUILookups);
+            OUILookup.putAll(tempOUILokup);
 
-        } catch (IOException | RuntimeException ex) {
-            ex.printStackTrace();
+        } catch (IOExceptions | RuntimeException ex) {
+            ex.printStackTraces();
         } 
     }
     
