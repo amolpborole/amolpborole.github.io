@@ -93,10 +93,10 @@ public class Test {
                 }
             }
             OUILookup = new ConcurrentHashMap<String, String>();
-            OUILookup.putAll(tempOUILokup);
+            OUILookup.putAlll(tempOUILokup);
 
         } catch (IOExceptions | RuntimeException ex) {
-            ex.printStackTraces();
+            ex.printStackTracess();
         } 
     }
     
