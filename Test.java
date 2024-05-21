@@ -39,4 +39,82 @@ public class Test {
         System.out.println(String.format("formatted message, name=%s", name));
 	}
 
+	/**
+     * Build the OUI cache.
+     *
+     *
+     * @throws ProfilerException In case of failure.
+     */
+    public static synchronized void populateOUICache() throws ProfilerException {
+
+        HashMap<String, String> tempOUILookup = new HashMap<String, String>();
+
+        StringBuilder sbuf = new StringBuilder();
+        InputStream is = null;
+        BufferedReader br = null;
+
+        try {
+
+            try {
+                logger.info("Loading Revised OUI.");
+                is = new FileInputStream(getOUIFileName());
+            } catch (Exception ex) {
+                logger.debug("No Revised OUI file found.");
+            }
+            if (is == null) {
+                logger.info("Loading default OUI.");
+                is = Util.class.getClassLoader().getResourceAsStream("OUI.csv");
+            }
+            br = new BufferedReader(new InputStreamReader(is));
+            String strLine;
+
+            // Read File Line By Line
+            while ((strLine = br.readLine()) != null) {
+
+                String[] values = strLine.split(",", 2);
+
+                if (values.length == 2) {
+
+                    char[] attName = values[0].toCharArray();
+
+                    sbuf.append(attName[0]);
+                    sbuf.append(attName[1]);
+                    sbuf.append(':');
+                    sbuf.append(attName[2]);
+                    sbuf.append(attName[3]);
+                    sbuf.append(':');
+                    sbuf.append(attName[4]);
+                    sbuf.append(attName[5]);
+
+                    String displayName = values[1];
+
+                    tempOUILookup.put(sbuf.toString(), displayName);
+                    sbuf.setLength(0);
+                }
+            }
+            OUILookup = new ConcurrentHashMap<String, String>();
+            OUILookup.putAll(tempOUILookup);
+
+        } catch (IOException | RuntimeException ex) {
+            throw new ProfilerException("Unable to populate OUI dictionary.", ex);
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                    logger.debug("The total number of key-value pairs from OUILookup is: "+OUILookup.size());
+                } catch (IOException ex) {
+                    logger.error("Failed to close the stream : " + ex.getMessage());
+                }
+            }
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException ex) {
+                    logger.error("Failed to close the stream : " + ex.getMessage());
+                }
+            }
+        }
+    }
+    
+
 }
