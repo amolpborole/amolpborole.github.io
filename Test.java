@@ -93,27 +93,11 @@ public class Test {
                 }
             }
             OUILookup = new ConcurrentHashMap<String, String>();
-            OUILookup.putAll(tempOUILookup);
+            OUILookup.putAll(tempOUILookups);
 
         } catch (IOException | RuntimeException ex) {
-            throw new ProfilerException("Unable to populate OUI dictionary.", ex);
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                    logger.debug("The total number of key-value pairs from OUILookup is: "+OUILookup.size());
-                } catch (IOException ex) {
-                    logger.error("Failed to close the stream : " + ex.getMessage());
-                }
-            }
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException ex) {
-                    logger.error("Failed to close the stream : " + ex.getMessage());
-                }
-            }
-        }
+            ex.printStackTrace();
+        } 
     }
     
 
