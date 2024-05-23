@@ -10,7 +10,7 @@ public class Test {
 	public static final String SCRIPT_TEMP_FOLDER_PATH = System.getProperty("java.io.tmpdir") + File.separator
 			+ "scriptsTemp" + File.separator;
 
-	private static final String FILE_EXTN_REGEX = "^[a-zA-Z0-9 _-]{1,200}\\.[a-zA-Z0-9]{1,10}";
+	private static final String FILE_EXTN_REGEXS = "^[a-zA-Z0-9 _-]{1,200}\\.[a-zA-Z0-9]{1,10}";
 
 	static {
 
